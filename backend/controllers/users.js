@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { compareSync, hashSync } from "bcryptjs";
 
-export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     return res.status(200).json({ users });
@@ -10,7 +10,19 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-export const signupUser = async (req, res, next) => {
+export const getUserById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id).populate("posts");
+    return res
+      .status(200)
+      .json({ _id: user._id, name: user.name, email: user.email });
+  } catch (e) {
+    return res.status(400).json("No user found");
+  }
+};
+
+export const signupUser = async (req, res) => {
   const newUser = req.body;
   if (
     !newUser.name &&
@@ -36,7 +48,7 @@ export const signupUser = async (req, res, next) => {
   }
 };
 
-export const loginUser = async (req, res, next) => {
+export const loginUser = async (req, res) => {
   const newUser = req.body;
   if (
     !newUser.name &&
