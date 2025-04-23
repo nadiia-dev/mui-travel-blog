@@ -1,8 +1,17 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DiaryItem from "../components/diaries/DiaryItem";
+import { getAllPosts } from "../api-helpers/api";
 
 const Diaries = () => {
+  const [posts, setPosts] = useState();
+  useEffect(() => {
+    getAllPosts()
+      .then((data) => setPosts(data?.allPosts))
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(posts);
   return (
     <Box
       display="flex"
@@ -11,9 +20,7 @@ const Diaries = () => {
       justifyContent="center"
       alignItems="center"
     >
-      {[1, 2, 3].map((item) => (
-        <DiaryItem key={item} />
-      ))}
+      {posts && posts.map((item) => <DiaryItem key={item._id} post={item} />)}
     </Box>
   );
 };

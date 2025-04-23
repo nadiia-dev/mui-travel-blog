@@ -8,7 +8,7 @@ const linksArr = ["home", "diaries", "auth"];
 const Header = () => {
   const [value, setValue] = useState(0);
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "transparent" }}>
+    <AppBar position="sticky" sx={{ bgcolor: "white" }}>
       <Toolbar>
         <ModeOfTravelIcon sx={{ color: "black" }} />
         <Tabs

@@ -4,8 +4,8 @@ import User from "../models/User.js";
 
 export const getAllPosts = async (req, res, next) => {
   try {
-    const allPosts = await Post.find();
-    return res.status(200).json({ allPosts }).populate("user");
+    const allPosts = await Post.find().populate("user");
+    return res.status(200).json({ allPosts });
   } catch (e) {
     return res.status(404).json({ message: "No posts found" });
   }

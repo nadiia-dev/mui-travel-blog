@@ -5,7 +5,7 @@ import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 // import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 // import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-const DiaryItem = () => {
+const DiaryItem = ({ post }) => {
   return (
     <Card
       sx={{
@@ -19,21 +19,24 @@ const DiaryItem = () => {
       }}
     >
       <CardHeader
-        avatar={<Avatar sx={{ bgcolor: "red" }}>R</Avatar>}
+        avatar={
+          <Avatar sx={{ bgcolor: "red", textTransform: "uppercase" }}>
+            {post.user.name.slice(0, 2)}
+          </Avatar>
+        }
         action={
           <IconButton aria-label="settings">
             {<EditLocationAltIcon />}
           </IconButton>
         }
+        title={post.location}
+        header={post.location}
+        subheader={new Date(`${post.date}`).toLocaleDateString()}
       />
-      <img
-        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="image"
-        height={194}
-      />
+      <img src={post.image} alt={post.title} height={194} />
       <CardContent>
         <Typography paddingBottom={1} variant="h6" color="text.secondary">
-          Title
+          {post.title}
         </Typography>
         <hr />
         <Box paddingTop={1} display="flex">
@@ -43,10 +46,10 @@ const DiaryItem = () => {
             variant="caption"
             sx={{ mr: 1 }}
           >
-            Name:
+            {post.user.name}:
           </Typography>
           <Typography variant="body2" colot="text.secondary">
-            Description
+            {post.description}
           </Typography>
         </Box>
       </CardContent>
