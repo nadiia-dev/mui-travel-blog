@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DiaryItem from "../components/diaries/DiaryItem";
-import { getAllPosts } from "../api-helpers/api";
+import { getAllPosts } from "../api-helpers/postsApi";
 
 const Diaries = () => {
   const [posts, setPosts] = useState();

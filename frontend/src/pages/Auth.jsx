@@ -1,5 +1,6 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { authRequest } from "../api-helpers/authApi";
 
 const Auth = () => {
   const [isSignup, setIsSignup] = useState(true);
@@ -16,6 +17,20 @@ const Auth = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (isSignup) {
+      authRequest(true, formData)
+        .then((data) => console.log(data))
+        .catch((e) => console.error(e));
+    } else {
+      authRequest(false, formData)
+        .then((data) => console.log(data))
+        .catch((e) => console.error(e));
+    }
+  };
+
   return (
     <Box
       margin="auto"
@@ -24,7 +39,7 @@ const Auth = () => {
       boxShadow={"5px 5px 10px #ccc"}
       sx={{ width: { sm: "70%", lg: "40%" } }}
     >
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box
           display="flex"
           flexDirection="column"
