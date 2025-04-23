@@ -19,7 +19,6 @@ const Auth = () => {
     if (isSignup) {
       localStorage.setItem("userId", data.user._id);
     } else {
-      console.log(data);
       localStorage.setItem("userId", data.id);
     }
     dispatch(authActions.login());
