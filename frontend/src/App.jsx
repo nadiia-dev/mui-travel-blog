@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import RootLayout from "./pages/RootLayout";
 import Diaries from "./pages/Diaries";
 import Auth from "./pages/Auth";
+import Add from "./pages/Add";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/add",
+        element: <Add />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

@@ -11,7 +11,6 @@ const Diaries = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(posts);
   return (
     <Box
       display="flex"
