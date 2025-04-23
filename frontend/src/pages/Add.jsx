@@ -1,13 +1,14 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { useState } from "react";
+import { addPost } from "../api-helpers/postsApi";
 
 const Add = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     location: "",
-    imageUrl: "",
+    image: "",
     date: "",
   });
 
@@ -16,6 +17,13 @@ const Add = () => {
       ...prevData,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addPost(formData)
+      .then((data) => console.log(data))
+      .catch((e) => console.error(e.message));
   };
 
   return (
@@ -32,7 +40,7 @@ const Add = () => {
           sx={{ fontSize: "40px", paddingLeft: 1, color: "lightcoral  " }}
         />
       </Box>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box
           padding={3}
           display="flex"
@@ -59,8 +67,8 @@ const Add = () => {
           <FormLabel sx={{ fontFamily: "quicksand" }}>Image URL</FormLabel>
           <TextField
             onChange={handleChange}
-            name="imageUrl"
-            value={formData.imageUrl}
+            name="image"
+            value={formData.image}
             variant="standard"
             margin="normal"
           />

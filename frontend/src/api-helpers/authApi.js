@@ -7,7 +7,6 @@ export const authRequest = async (signup, data) => {
       email: data.email,
       password: data.password,
     });
-    console.log(res.data);
     const resData = res.data;
     return resData;
   } catch (e) {
