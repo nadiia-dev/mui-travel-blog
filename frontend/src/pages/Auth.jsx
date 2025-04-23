@@ -1,14 +1,30 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { authRequest } from "../api-helpers/authApi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store";
 
 const Auth = () => {
+  const naviagte = useNavigate();
+  const dispatch = useDispatch();
   const [isSignup, setIsSignup] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const onAuthenticate = (data) => {
+    if (isSignup) {
+      localStorage.setItem("userId", data.user._id);
+    } else {
+      console.log(data);
+      localStorage.setItem("userId", data.id);
+    }
+    dispatch(authActions.login());
+    naviagte("/diaries");
+  };
 
   const handleChange = (e) => {
     setFormData((prevData) => ({
@@ -22,11 +38,11 @@ const Auth = () => {
 
     if (isSignup) {
       authRequest(true, formData)
-        .then((data) => console.log(data))
+        .then((data) => onAuthenticate(data))
         .catch((e) => console.error(e));
     } else {
       authRequest(false, formData)
-        .then((data) => console.log(data))
+        .then((data) => onAuthenticate(data))
         .catch((e) => console.error(e));
     }
   };

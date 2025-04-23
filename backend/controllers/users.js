@@ -63,7 +63,6 @@ export const loginUser = async (req, res) => {
   let existingUser;
   try {
     existingUser = await User.findOne({
-      name: newUser.name,
       email: newUser.email,
     });
   } catch (e) {
