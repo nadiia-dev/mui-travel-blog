@@ -1,12 +1,24 @@
 import ModeOfTravelIcon from "@mui/icons-material/ModeOfTravel";
 import { Tab, Tabs, Toolbar, AppBar } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const linksArr = ["home", "diaries", "auth"];
 
 const Header = () => {
+  const location = useLocation();
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setValue(0);
+    } else if (location.pathname === "/diaries") {
+      setValue(1);
+    } else if (location.pathname === "/auth") {
+      setValue(2);
+    }
+  }, [location]);
+
   return (
     <AppBar position="sticky" sx={{ bgcolor: "white" }}>
       <Toolbar>
