@@ -6,6 +6,10 @@ import Auth from "./pages/Auth";
 import Add from "./pages/Add";
 import Profile from "./pages/Profile";
 import Update from "./components/diaries/Update";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "./store";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,21 +25,41 @@ const router = createBrowserRouter([
       },
       {
         path: "/add",
-        element: <Add />,
+        element: (
+          <ProtectedRoute>
+            <Add />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/post/:id",
-        element: <Update />,
+        element: (
+          <ProtectedRoute>
+            <Update />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
+      dispatch(authActions.login());
+    }
+  }, [dispatch]);
+
   return <RouterProvider router={router} />;
 }
 

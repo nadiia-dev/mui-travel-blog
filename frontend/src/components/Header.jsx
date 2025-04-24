@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-const linksArr = ["home", "diaries", "auth"];
-const loggedInLinks = ["home", "diaries", "add", "profile"];
+const linksArr = [
+  { path: "", label: "Home" },
+  { path: "diaries", label: "Diaries" },
+  { path: "auth", label: "Auth" },
+];
+const loggedInLinks = [
+  { path: "", label: "Home" },
+  { path: "diaries", label: "Diaries" },
+  { path: "add", label: "Add" },
+  { path: "profile", label: "Profile" },
+];
 
 const Header = () => {
   const location = useLocation();
@@ -13,14 +22,16 @@ const Header = () => {
   const isLoggedIn = useSelector((state) => state.isAuthorised);
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      setValue(0);
-    } else if (location.pathname === "/diaries") {
-      setValue(1);
-    } else if (location.pathname === "/auth") {
-      setValue(2);
+    let index;
+    if (isLoggedIn) {
+      index = loggedInLinks.findIndex((tab) => tab.path === location.pathname);
+    } else {
+      index = linksArr.findIndex((tab) => tab.path === location.pathname);
     }
-  }, [location]);
+    if (index !== -1) {
+      setValue(index);
+    }
+  }, [location, isLoggedIn]);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: "white" }}>
@@ -34,10 +45,10 @@ const Header = () => {
           {isLoggedIn
             ? loggedInLinks.map((link) => (
                 <Tab
-                  key={link}
+                  key={link.label}
                   LinkComponent={Link}
-                  to={`/${link === "home" ? "" : link}`}
-                  label={link}
+                  to={`/${link.label === "Home" ? "" : link.path}`}
+                  label={link.label}
                   sx={{
                     textDecoration: "none",
                     ":hover": {
@@ -49,10 +60,10 @@ const Header = () => {
               ))
             : linksArr.map((link) => (
                 <Tab
-                  key={link}
+                  key={link.label}
                   LinkComponent={Link}
-                  to={`/${link === "home" ? "" : link}`}
-                  label={link}
+                  to={`/${link.label === "Home" ? "" : link.path}`}
+                  label={link.label}
                   sx={{
                     textDecoration: "none",
                     ":hover": {

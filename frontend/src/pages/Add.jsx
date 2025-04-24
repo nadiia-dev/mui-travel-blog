@@ -2,8 +2,10 @@ import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { useState } from "react";
 import { addPost } from "../api-helpers/postsApi";
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -19,10 +21,15 @@ const Add = () => {
     }));
   };
 
+  const onResReceived = (data) => {
+    console.log(data);
+    navigate("/diaries");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     addPost(formData)
-      .then((data) => console.log(data))
+      .then(onResReceived)
       .catch((e) => console.error(e.message));
   };
 
