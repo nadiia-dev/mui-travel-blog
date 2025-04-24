@@ -5,6 +5,7 @@ import Diaries from "./pages/Diaries";
 import Auth from "./pages/Auth";
 import Add from "./pages/Add";
 import Profile from "./pages/Profile";
+import Update from "./components/diaries/Update";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/add",
         element: <Add />,
+      },
+      {
+        path: "/post/:id",
+        element: <Update />,
       },
       {
         path: "/profile",

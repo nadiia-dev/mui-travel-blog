@@ -14,7 +14,7 @@ export const getAllPosts = async (req, res, next) => {
 export const getPostById = async (req, res, next) => {
   const id = req.params.id;
   try {
-    const post = await Post.findById({ id });
+    const post = await Post.findById(id);
     return res.status(200).json({ post });
   } catch (e) {
     return res.status(404).json({ message: `No post fonud for id ${id}` });
