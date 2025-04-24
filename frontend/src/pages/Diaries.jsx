@@ -19,7 +19,10 @@ const Diaries = () => {
       justifyContent="center"
       alignItems="center"
     >
-      {posts && posts.map((item) => <DiaryItem key={item._id} post={item} />)}
+      {posts &&
+        posts.map((item) => (
+          <DiaryItem key={item._id} post={item} userName={item.user.name} />
+        ))}
     </Box>
   );
 };

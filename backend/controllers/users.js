@@ -16,7 +16,12 @@ export const getUserById = async (req, res) => {
     const user = await User.findById(id).populate("posts");
     return res
       .status(200)
-      .json({ _id: user._id, name: user.name, email: user.email });
+      .json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        posts: user.posts,
+      });
   } catch (e) {
     return res.status(400).json("No user found");
   }

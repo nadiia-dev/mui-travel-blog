@@ -13,3 +13,14 @@ export const authRequest = async (signup, data) => {
     return console.log("Unable to Authenticate", e.message);
   }
 };
+
+export const getUserDetails = async () => {
+  const id = localStorage.getItem("userId");
+  try {
+    const res = await instance.get(`/users/${id}`);
+    const data = res.data;
+    return data;
+  } catch (e) {
+    return console.log("Some Error Occurred", e.message);
+  }
+};

@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { deletePost } from "../../api-helpers/postsApi";
 import { useState } from "react";
 
-const DiaryItem = ({ post }) => {
+const DiaryItem = ({ post, userName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedInUser = () => {
     if (localStorage.getItem("userId") === post.user._id) {
@@ -48,7 +48,7 @@ const DiaryItem = ({ post }) => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red", textTransform: "uppercase" }}>
-            {post.user.name.slice(0, 2)}
+            {userName.slice(0, 2)}
           </Avatar>
         }
         action={
@@ -73,7 +73,7 @@ const DiaryItem = ({ post }) => {
             variant="caption"
             sx={{ mr: 1 }}
           >
-            {post.user.name}:
+            {userName}:
           </Typography>
           <Typography variant="body2" colot="text.secondary">
             {post.description}
