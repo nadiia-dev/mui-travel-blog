@@ -1,9 +1,11 @@
 import {
+  Alert,
   Avatar,
   Box,
   CardActions,
   CardHeader,
   IconButton,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -12,13 +14,23 @@ import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "react-router-dom";
+import { deletePost } from "../../api-helpers/postsApi";
+import { useState } from "react";
 
 const DiaryItem = ({ post }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const isLoggedInUser = () => {
     if (localStorage.getItem("userId") === post.user._id) {
       return true;
     }
     return false;
+  };
+
+  const handleDelete = () => {
+    deletePost(post._id)
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+    setIsOpen(true);
   };
 
   return (
@@ -77,11 +89,25 @@ const DiaryItem = ({ post }) => {
           >
             <ModeEditOutlineIcon />
           </IconButton>
-          <IconButton color="error">
+          <IconButton color="error" onClick={handleDelete}>
             <DeleteForeverIcon />
           </IconButton>
         </CardActions>
       )}
+
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={6000}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          severity="success"
+          sx={{ width: "100%" }}
+          onClose={() => setIsOpen(false)}
+        >
+          Successfully deleted post!
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };

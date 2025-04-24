@@ -42,3 +42,14 @@ export const updatePost = async (id, postData) => {
     return console.log("Some Error Occurred", e.message);
   }
 };
+
+export const deletePost = async (id) => {
+  try {
+    const res = await instance.delete(`/posts/${id}`);
+    const data = res.data;
+
+    return data;
+  } catch (e) {
+    return console.log("Some Error Occurred", e.message);
+  }
+};
